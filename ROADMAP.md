@@ -1,14 +1,4 @@
-# Roadmap
+# Delivery boundary
 
-## Now
-
-- Define and prove one small outcome.
-
-## Next
-
-- Record the next validated milestone.
-
-## Later
-
-- Keep only ideas that still matter after the current milestone.
-
+One useful Level 3 dashboard, delivered in one PR. Stop at PR readiness.
+No additional milestones are authorized.

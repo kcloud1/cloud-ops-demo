@@ -1,61 +1,29 @@
-# Specification
+# Cloud Operations Dashboard
 
-Status: DRAFT
-Context: `<PERSONAL | WORK>`
-Environment: `<LOCAL | LAB | DEV | NONPROD | PROD>`
+Status: ACTIVE — scope authorized by the user's “GO — Level 3” brief.
+Environment: mock browser application; Cloudflare deployment requires later approval.
 
-## Objective
+## Outcome and authority
 
-Describe the problem and intended result.
+Initialize `kcloud1/cloud-ops-demo`, implement the accepted intent, validate locally,
+and prepare one cohesive PR. Read `repo-starter` and `kcloud1/codex-cloud-hello-site`
+as references. Do not merge or deploy. No real AWS access.
 
-## Outcome
+## Required behavior
 
-Describe the usable milestone/release package to deliver.
+- Overview: three accounts, healthy resources (no findings), compliance and critical findings.
+- 18 fictional EC2/S3 resources; filters combine account, type, and compliance status.
+- Finding details include severity, context, and mock suggested remediation.
+- Approve Once / Reject records one terminal decision per finding for the current session.
+  Compliance and overview totals remain unchanged; reload resets decisions.
+- Responsive layout, dark/light mode, text status labels, keyboard-accessible review dialog.
+- Plain HTML/CSS/JavaScript; reuse Level 2's Worker + ASSETS + asset allowlist pattern.
 
-## Authorized
+## Constraints and plan
 
-List the actions that may proceed without repeated approval while this SPEC is ACTIVE and the owning Issue/instruction remains in scope.
-
-For `PERSONAL` + `LAB`/`DEV`, explicitly authorized deterministic work may include repo-owned implementation, deployment, cloud resource creation/mutation, validation, reset, and cleanup without asking resource-by-resource.
-
-For `WORK` and especially `PROD`, grant only the bounded authority actually intended. Read-only investigation may be standing authority when explicitly stated; mutation requires proportionate approval in this SPEC or the current user instruction.
-
-Repository visibility is not an authority signal. Private does not mean personal; public does not mean unrestricted.
-
-## MUST
-
-- List required behavior and acceptance-critical invariants.
-
-## MUST NOT
-
-- List hard scope, security, data, publication, production, destructive, or cost boundaries.
-
-## Phases / Milestones
-
-Group related work into a cohesive useful package, normally several tightly coupled tasks or 2-3 phases sharing one outcome and trust boundary.
-
-- Phase 1: `<outcome>`
-- Phase 2: `<outcome>`
-- Phase 3: `<outcome>`
-
-Do not stop between routine approved phases merely to request permission again.
-
-## Verification
-
-State the smallest meaningful proof: focused tests/checks, runtime/provider readback, user-path validation, and cleanup/retention state when applicable.
-
-## Stop Gates
-
-Stop and ask only when required by a real boundary, for example:
-
-- target repository/account/environment does not match the approved scope;
-- work would enter PROD or another higher-risk environment without authority;
-- destructive/non-recoverable data loss, credential/secret mutation, public exposure, or material cost is not explicitly approved;
-- implementation would materially widen architecture, security/trust boundary, or external integration beyond the milestone;
-- required validation fails or current state is ambiguous/unsafe.
-
-Technical failure remains a blocker even when mutation is otherwise authorized.
-
-## Acceptance
-
-List concise conditions that make the whole milestone reviewable and complete.
+No React, database, SDK, Terraform, authentication, live AI/AWS calls, new testing
+framework, or automatic CI. Keep inherited governance; do not duplicate it.
+Implement UI and fixtures, perform exactly README's two browser checks, then open
+one PR with results. Revert the feature commit to roll back; retain source and PR evidence.
+Stop on a repository mismatch, required validation failure, or scope/access blocker.
+Stop after PR readiness. Merge and deployment need separate approval.
