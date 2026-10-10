@@ -58,6 +58,24 @@ What we learned:
    Non-compliant and overview totals stay 3 accounts / 9 healthy / 9 findings / 3 critical.
    Reload; confirm decisions return to Pending. Escape closes details and restores focus.
 
+## Level 4 · Git release marker
+
+[Issue #5](https://github.com/kcloud1/cloud-ops-demo/issues/5) owns the accepted
+GitHub `main` → existing Cloudflare Worker release proof. The footer now displays
+**CloudOps · Git Release 1**. This harmless marker leaves mock data, filters,
+approval decisions, and dark mode unchanged. No build command is needed; native
+Workers Builds should deploy with `npx wrangler deploy` from repository root.
+Build configuration was absent at initial inspection (`12040`); merging this marker
+alone is not deployment proof. The exact merged SHA, automatic build/deployment IDs,
+provider setup blockers, and live acceptance results belong in Issue #5.
+
+Exactly two release acceptance checks:
+
+1. At the existing Worker URL, confirm **CloudOps · Git Release 1** in the footer;
+   Production → S3 → Non-compliant must show only `acme-prod-reports`.
+2. Review `prod-api-01` and choose Approve Once; its decision must become
+   Approved once while compliance remains Non-compliant and no AWS action occurs.
+
 ## Next deployments and reproducibility
 
 The two sites above are confirmed working; **both were initially published through explicit one-time operations** after owner approval. They do not yet prove GitHub -> hosting continuous deployment. Updating `main` alone will not update either of these hosting endpoints.
