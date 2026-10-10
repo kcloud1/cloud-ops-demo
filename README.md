@@ -21,12 +21,12 @@ was squash-merged into `main` as
 the merged feature branch was deleted. Both focused local browser scenarios below
 passed, including mobile/theme presentation and keyboard focus.
 
-Website: [CloudOps dashboard](https://cloud-ops-demo.amitkarpe.workers.dev).
-The owner reported success and supplied a screenshot showing 3 accounts, 9 healthy
-resources, 9 findings, 3 critical findings, and `prod-api-01` marked Approved once
-while remaining Non-compliant. Cloudflare readback confirmed the Worker exists and
-its workers.dev route is enabled. This session could not independently fetch the
-live page; the deployed artifact's exact correspondence to Git was not verified.
+### Live deployments and evidence
+
+- **Cloudflare Workers:** [live CloudOps dashboard](https://cloud-ops-demo.amitkarpe.workers.dev/). On 2026-10-10, ChatGPT/Cloudflare API confirmed `cloud-ops-demo` is serving version `48043c25-24e3-4cde-86e6-72ee190e2cb4` at 100% traffic; an independent public fetch loaded the HTML dashboard and its JavaScript. The initial release used a directly uploaded Worker module bundling exactly the three frontend file contents from Git commit `d245bfc9`. **It did not use the repository's `worker.js`/`wrangler.jsonc` as a build artifact.** The Git integration/automatic redeployment is not yet configured or proven.
+- **AWS Amplify Hosting:** [live CloudOps dashboard](https://main.d3kkhf9qfepghs.amplifyapp.com/). On 2026-10-10, AWS account `333438771545`, `ap-southeast-1`, app `d3kkhf9qfepghs`, branch `main`, manual deployment job `1` finished **SUCCEED** with DEPLOY/VERIFY both successful. Independent public fetch loaded HTML and JavaScript. Only `index.html`, `style.css`, and `script.js` from the same `d245bfc9` commit were deployed through a temporary private S3 staging prefix; the staging objects, bucket policy and bucket were deleted after acceptance. **This Amplify app is not GitHub-connected; no auto redeploy on push.**
+- **CodeConnections boundary:** The separate personal AWS GitHub connection named `codex-cloud` is `AVAILABLE` but **is not wired to Amplify**. Native Amplify GitHub Hosting authorization is a distinct GitHub App integration.
+- **GUI acceptance:** Owner screenshot shows 3 mock accounts, 9 healthy resources, 9 findings and 3 critical findings, with `prod-api-01` marked `Approved once` while still `Non-compliant`. This is simulated approval; no actual remediation or AWS resource change.
 
 What we learned:
 
@@ -58,23 +58,12 @@ What we learned:
    Non-compliant and overview totals stay 3 accounts / 9 healthy / 9 findings / 3 critical.
    Reload; confirm decisions return to Pending. Escape closes details and restores focus.
 
-## Deployment (only after owner approval)
+## Next deployments and reproducibility
 
-The initial dashboard PR is merged and the owner reports a successful deployment.
-For future releases, obtain explicit deployment authority. This repository reuses
-[kcloud1/codex-cloud-hello-site](https://github.com/kcloud1/codex-cloud-hello-site)'s
-minimal `worker.js` + `wrangler.jsonc` ASSETS pattern. `.assetsignore` uploads only
-`index.html`, `style.css`, and `script.js`; no API routes are needed.
+The two sites above are confirmed working; **both were initially published through explicit one-time operations** after owner approval. They do not yet prove GitHub -> hosting continuous deployment. Updating `main` alone will not update either of these hosting endpoints.
 
-From an authorized machine with Node.js and Cloudflare access, select the intended
-Cloudflare account, run `npx wrangler@4 login` if needed, then
-`npx wrangler@4 deploy` from the repository root. Worker name: `cloud-ops-demo`.
-Use the actual workers.dev URL returned by Wrangler. There is no build step.
-Alternatively, after explicit approval, connect this repository through Workers
-Git integration with root working directory, no build command, and the same deploy
-command. Do not enable automatic deployment before approval.
+For normal future deployments, connect this *existing repository* to exactly one provider's native Git integration after the one-time owner GitHub App/repository authorization. On Cloudflare Workers the checked-in `worker.js`, `wrangler.jsonc` and `.assetsignore` are the reproducible deployment contract; verify a Git-built artifact and its live SHA before treating direct-upload parity as a CI/CD proof. For AWS Amplify, choose the GitHub Hosting integration if automatic deployment is the accepted next milestone. The already created manual app and AWS CodeConnections do not establish that integration.
 
-The implementation PR validated the dashboard locally; subsequent deployment evidence
-is recorded above. This documentation update changes no runtime, Cloudflare settings,
-or AWS permissions. Source starts at [AGENTS.md](AGENTS.md),
-[project intent](intent/0001-project-bootstrap/intent.md), and [SPEC.md](SPEC.md).
+Keep personal learning deployments within the accepted GO and cost/publication limits. Official AWS/PROD, IAM, credentials, restricted data, destructive changes and new account resources need their applicable explicit safety gates. No new framework, pipeline, test runner or live AWS API is needed for this mock website.
+
+Reusable, provider-neutral starting point: [repo-starter cloud-first quickstart](https://github.com/amitkarpe/repo-starter/blob/main/docs/CLOUD_FIRST_QUICKSTART.md). Account-specific rules and complete evidence belong in the private controller [work](https://github.com/amitkarpe/work) and this repository's Git history.
