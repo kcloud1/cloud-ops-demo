@@ -1,0 +1,5 @@
+# Allowlist public assets; keep governance files and Worker source out of uploads.
+**
+!index.html
+!style.css
+!script.js
